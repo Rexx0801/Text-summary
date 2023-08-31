@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>test model</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body   background="http://www.spaldwickschool.org.uk/wp-content/uploads/2018/05/watercolor3.jpg">
+
+<div ng-app="myApp" ng-controller="myCtrl" class="container" >
+    <br> 
+    <br>
+    <br> 
+    <form>
+        <div class="form-group">
+          <label for="comment">Enter Text:</label>
+          <textarea class="form-control" ng-model="comment" rows="5"  id="comment"></textarea>
+        </div>
+    </form>
+
+    <button type="button" class="btn btn-default" ng-click="myFunction()">Get Result</button>
+    <br>
+    <br>
+    <label for="comment">Result : </label> 
+    <p> {{'{{result}}'}} </p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    </div>
+    <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope,$http) {
+        var label = null;
+        $scope.myFunction = function() {
+            var data1 = {'comment': $scope.comment}
+            $http({
+                method : "POST",
+                url : "postmt",
+                data :  $scope.comment,
+                headers: {'Content-Type' : 'application/json; charset=UTF-8'}
+            }).then(function mySuccess(response) {
+                $scope.result = response.data.result;
+            }, function myError(response) {
+                $scope.result = response.statusText;
+            });
+        }
+
+    });
+    </script> 
+</div>
+</body>
+</html>
